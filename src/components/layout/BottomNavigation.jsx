@@ -1,10 +1,9 @@
-import { Bookmark, Clapperboard, Film, Heart, House } from "lucide-react";
+import { Bookmark, Clapperboard, Heart, House } from "lucide-react";
 import { NavLink } from "react-router";
 
 const mobileNavLinks = [
   { label: "Home", path: "/", icon: House },
   { label: "Movies", path: "/movies", icon: Clapperboard },
-  { label: "Free Films", path: "/free-movies", icon: Film },
   { label: "Favorites", path: "/favorites", icon: Heart },
   { label: "Watchlist", path: "/watchlist", icon: Bookmark },
 ];
