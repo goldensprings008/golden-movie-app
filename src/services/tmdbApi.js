@@ -43,7 +43,9 @@ export function searchMovies(query) {
 
 // Retrieves complete information for one selected movie.
 export function getMovieDetails(movieId) {
-  return request(`/movie/${movieId}`);
+  return request(`/movie/${movieId}`, {
+    append_to_response: "credits,videos",
+  });
 }
 
 // Creates a complete TMDB image URL from a poster or backdrop path.

@@ -66,6 +66,18 @@ function MovieDetailsPage() {
   const runtime = movie.runtime ? `${movie.runtime} min` : "N/A";
   const movieIsFavorite = isFavorite(movie.id);
   const movieIsInWatchlist = isInWatchlist(movie.id);
+  const trailer = movie.videos?.results?.find(
+    (video) => video.site === "YouTube" && video.type === "Trailer"
+  );
+  const cast = movie.credits?.cast?.slice(0, 10) || [];
+  const producers =
+    movie.credits?.crew?.filter((person) =>
+      ["Producer", "Executive Producer"].includes(person.job)
+    ).slice(0, 8) || [];
+  const directors =
+    movie.credits?.crew?.filter((person) => person.job === "Director").slice(0, 3) || [];
+  const rating = Number(movie.vote_average || 0);
+  const ratingPercent = Math.min(100, Math.max(0, rating * 10));
 
   return (
     <div>
@@ -211,6 +223,80 @@ function MovieDetailsPage() {
                 {movie.original_language?.toUpperCase() || "N/A"}
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-cinema-800 bg-cinema-900/35">
+        <div className="mx-auto max-w-7xl space-y-16 px-4 py-12 sm:px-6 lg:px-8">
+          <div>
+            <p className="text-sm font-semibold tracking-[0.2em] text-gold-400 uppercase">
+              Watch the trailer
+            </p>
+            <h2 className="mt-2 text-3xl font-bold text-white">Preview</h2>
+            {trailer ? (
+              <div className="mt-6 aspect-video max-w-4xl overflow-hidden rounded-xl border border-cinema-800 bg-black shadow-xl shadow-black/20">
+                <iframe
+                  className="h-full w-full"
+                  src={`https://www.youtube.com/embed/${trailer.key}`}
+                  title={`${movie.title} trailer`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <p className="mt-5 text-zinc-400">No official trailer is available.</p>
+            )}
+          </div>
+
+          <div>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold tracking-[0.2em] text-gold-400 uppercase">
+                  The people behind it
+                </p>
+                <h2 className="mt-2 text-3xl font-bold text-white">Cast and crew</h2>
+              </div>
+              <div className="text-right">
+                <p className="text-sm text-zinc-400">Community ranking</p>
+                <p className="text-3xl font-bold text-gold-400">{rating.toFixed(1)}<span className="text-base text-zinc-400">/10</span></p>
+                <div className="mt-2 h-2 w-32 overflow-hidden rounded-full bg-cinema-800">
+                  <div className="h-full bg-gold-400" style={{ width: `${ratingPercent}%` }} />
+                </div>
+                <p className="mt-1 text-xs text-zinc-500">{movie.vote_count?.toLocaleString() || 0} votes</p>
+              </div>
+            </div>
+
+            {cast.length > 0 ? (
+              <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10">
+                {cast.map((person) => (
+                  <article key={`${person.id}-${person.character}`} className="overflow-hidden rounded-xl border border-cinema-800 bg-cinema-950">
+                    <img
+                      src={getImageUrl(person.profile_path, "w185")}
+                      alt={person.name}
+                      className="aspect-[2/3] w-full object-cover"
+                    />
+                    <div className="p-3">
+                      <h3 className="line-clamp-2 text-sm font-semibold text-white">{person.name}</h3>
+                      <p className="mt-1 line-clamp-2 text-xs text-zinc-500">{person.character || "Cast"}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="mt-5 text-zinc-400">Cast information is unavailable.</p>
+            )}
+
+            {(directors.length > 0 || producers.length > 0) && (
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {[...directors.map((person) => ({ ...person, role: "Director" })), ...producers.map((person) => ({ ...person, role: person.job }))].map((person) => (
+                  <div key={`${person.id}-${person.role}`} className="rounded-xl border border-cinema-800 bg-cinema-950 p-4">
+                    <p className="text-xs text-gold-400">{person.role}</p>
+                    <p className="mt-1 font-semibold text-white">{person.name}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
