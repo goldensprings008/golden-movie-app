@@ -1,0 +1,70 @@
+/*
+  animations.css — all custom keyframe animations for the app.
+  Imported in index.css alongside the Tailwind base.
+*/
+
+/* Hero slideshow — new backdrop fades in and very slightly zooms out */
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Movie card hover lift — used with Tailwind's group-hover utilities */
+@keyframes card-rise {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+/* Gentle pulse on skeleton placeholders while data loads */
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* Slide up — page sections entering the viewport from below */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in — simple opacity reveal for modals or overlays */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Dot pulse — used on the hero slideshow indicator dots */
+@keyframes dot-expand {
+  from {
+    width: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  to {
+    width: 32px;
+    background-color: #f5c451;
+  }
+}
