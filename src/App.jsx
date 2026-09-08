@@ -6,6 +6,7 @@ import MoviesPage from "./pages/MoviesPage";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import WatchlistPage from "./pages/WatchlistPage";
+import FreeMoviesPage from "./pages/FreeMoviesPage";
 import BottomNavigation from "./components/layout/BottomNavigation";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/movie/:id" element={<MovieDetailsPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/watchlist" element={<WatchlistPage />} />
+          <Route path="/free-movies" element={<FreeMoviesPage />} />
         </Routes>
       </main>
 

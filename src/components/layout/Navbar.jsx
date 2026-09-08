@@ -4,6 +4,7 @@ import { NavLink } from "react-router";
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "Movies", path: "/movies" },
+  { label: "Free Films", path: "/free-movies" },
   { label: "Favorites", path: "/favorites" },
   { label: "Watchlist", path: "/watchlist" },
 ];
